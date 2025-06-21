@@ -2,63 +2,100 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tucson Permit Assistant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Field Assistant</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
-<body onload="translateUI(); loadFromURL();">
+<body onload="initApp()" class="light">
   <header>
-    <h1 id="title">🛠️ Tucson Permit Assistant</h1>
-    <div>
-      <label for="language">🌐</label>
-      <select id="language" onchange="translateUI()">
+    <h1 id="title" tabindex="0">🛠️ Tucson Field Assistant</h1>
+    <div id="top-controls">
+      <select id="language" onchange="changeLanguage()" aria-label="Select language">
+        <option value="auto">🌐 Auto Detect</option>
         <option value="en">English</option>
         <option value="es">Español</option>
       </select>
+      <button id="darkModeToggle" aria-pressed="false" aria-label="Toggle dark mode">🌙 Dark Mode</button>
     </div>
   </header>
 
   <main>
-    <label id="label-jobType" for="jobType">Job Type</label>
-    <select id="jobType">
-      <option>Electrical</option>
-      <option>Plumbing</option>
-      <option>Remodeling</option>
-      <option>HVAC</option>
-      <option>Roofing</option>
-      <option>Landscaping</option>
-      <option>Painting</option>
-      <option>Other</option>
-    </select>
+    <section aria-labelledby="taskLabel">
+      <label id="taskLabel" for="taskSelect">Choose Task:</label>
+      <select id="taskSelect" onchange="loadChecklist()" aria-describedby="taskDesc" aria-required="true">
+        <option value="">-- Select --</option>
+      </select>
+      <p id="taskDesc" class="sr-only">Select a task to load its checklist and permit info</p>
+    </section>
 
-    <label id="label-description" for="description">Job Description</label>
-    <textarea id="description" rows="4"></textarea>
+    <section id="checklistSection" aria-live="polite" aria-relevant="additions removals" tabindex="0">
+      <h2>Checklist</h2>
+      <div id="checklist" role="list"></div>
+    </section>
 
-    <div class="button-row">
-      <button id="checkBtn" onclick="checkPermit()">Check Permit</button>
-      <button id="pdfBtn" onclick="downloadPDF()" disabled>📄 Download PDF</button>
-      <button id="shareBtn" onclick="copyShareLink()" disabled>🔗 Copy Share Link</button>
-    </div>
+    <section id="permitSection" aria-label="Permit guidance" tabindex="0"></section>
 
-    <div class="result" id="result" style="display:none;"></div>
+    <section id="customizeSection" aria-label="Customize task steps" hidden>
+      <h2>Customize Task Steps</h2>
+      <ul id="customStepsList"></ul>
+      <input type="text" id="newStepInput" aria-label="New step description" />
+      <button id="addStepBtn">Add Step</button>
+      <button id="resetTaskBtn">Reset to Default</button>
+    </section>
 
-    <section id="chat-section">
-      <button id="toggleChatBtn" onclick="toggleChat()">💬 FAQs Chat</button>
-      <div id="chatContainer" style="display:none;">
-        <div id="chatOutput"></div>
-        <input id="chatInput" type="text" placeholder="Ask a question..." onkeydown="if(event.key==='Enter'){chatSend();}" />
-        <button onclick="chatSend()">Send</button>
-      </div>
+    <section id="notesSection">
+      <label for="notes">📝 Notes:</label>
+      <textarea id="notes" rows="4" placeholder="Add field notes here..." aria-label="Field notes"></textarea>
+      <button id="startVoiceBtn" aria-label="Start voice input">🎙️ Start Voice Input</button>
+      <button id="stopVoiceBtn" aria-label="Stop voice input" disabled>🛑 Stop Voice Input</button>
+    </section>
+
+    <section id="photoSection">
+      <label for="photoInput">📸 Add Photo:</label>
+      <input type="file" id="photoInput" accept="image/*" capture="environment" aria-label="Add photo from camera or files" />
+      <div id="photoPreview" aria-live="polite"></div>
+    </section>
+
+    <section id="locationSection">
+      <button id="locationBtn" onclick="getLocation()" aria-label="Get current location">📍 Get Location</button>
+      <div id="locationDisplay" aria-live="polite" tabindex="0"></div>
+    </section>
+
+    <section id="reportSection">
+      <button id="downloadBtn" disabled aria-disabled="true">📄 Export PDF Report</button>
+    </section>
+
+    <section id="helpSection" hidden>
+      <h2>Help & FAQ</h2>
+      <details>
+        <summary>What tasks are included?</summary>
+        <p>Install Water Heater, Install EV Charger, Kitchen Remodel by default. You can customize steps per task.</p>
+      </details>
+      <details>
+        <summary>Is this app offline-capable?</summary>
+        <p>Yes, it uses service worker caching so you can use it without internet after first load.</p>
+      </details>
+      <details>
+        <summary>How do I save my progress?</summary>
+        <p>Your progress is saved automatically in your browser’s local storage.</p>
+      </details>
+      <details>
+        <summary>How do I use voice input?</summary>
+        <p>Click "Start Voice Input" and speak your notes. Click "Stop Voice Input" to finish.</p>
+      </details>
+    </section>
+
+    <section id="footerSection">
+      <button id="toggleHelpBtn" aria-expanded="false" aria-controls="helpSection">❓ Help / FAQ</button>
     </section>
   </main>
 
   <footer>
-    <p>
-      Built for Tucson contractors. Visit 
-      <a href="https://www.tucsonaz.gov/Departments/Planning-Development-Services" target="_blank">Tucson Development Services</a>
-    </p>
+    <p>© 2025 Tucson Field Assistant - Works offline · Arizona inspired 🌵</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
