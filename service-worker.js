@@ -9,22 +9,14 @@ const FILES_TO_CACHE = [
 ];
 
 self.addEventListener("install", evt => {
-  evt.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(FILES_TO_CACHE);
-    })
-  );
+  evt.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE)));
   self.skipWaiting();
 });
 
 self.addEventListener("activate", evt => {
   evt.waitUntil(
     caches.keys().then(keyList =>
-      Promise.all(
-        keyList.map(key => {
-          if (key !== CACHE_NAME) return caches.delete(key);
-        })
-      )
+      Promise.all(keyList.map(key => key !== CACHE_NAME && caches.delete(key)))
     )
   );
   self.clients.claim();
@@ -32,10 +24,5 @@ self.addEventListener("activate", evt => {
 
 self.addEventListener("fetch", evt => {
   if (evt.request.method !== "GET") return;
-
-  evt.respondWith(
-    caches.match(evt.request).then(response => {
-      return response || fetch(evt.request);
-    })
-  );
+  evt.respondWith(caches.match(evt.request).then(response => response || fetch(evt.request)));
 });
