@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tucson Permit Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1 id="title">🛠️ Tucson Permit Assistant</h1>
+    <div class="lang-toggle">
+      <label for="language">🌐</label>
+      <select id="language" onchange="translateUI()">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <label id="label-jobType" for="jobType">Job Type</label>
+    <select id="jobType" onchange="updateShareLink()">
+      <option>Electrical</option>
+      <option>Plumbing</option>
+      <option>Remodeling</option>
+      <option>HVAC</option>
+      <option>Roofing</option>
+      <option>Landscaping</option>
+      <option>Painting</option>
+      <option>Other</option>
+    </select>
+
+    <label id="label-description" for="description">Job Description</label>
+    <textarea id="description" rows="4" placeholder="Describe the work being done..." oninput="updateShareLink()"></textarea>
+
+    <div class="button-row">
+      <button id="checkBtn" onclick="checkPermit()">Check Permit</button>
+      <button id="pdfBtn" onclick="downloadPDF()" disabled>📄 Download PDF</button>
+      <button id="shareBtn" onclick="copyShareLink()" disabled>🔗 Copy Share Link</button>
+    </div>
+
+    <div class="result" id="result" style="display:none;"></div>
+
+    <section id="chat-section">
+      <button id="toggleChatBtn" onclick="toggleChat()">💬 FAQs Chat</button>
+      <div id="chatContainer" style="display:none;">
+        <div id="chatOutput"></div>
+        <input id="chatInput" type="text" placeholder="Ask a question..." onkeydown="if(event.key==='Enter'){chatSend();}" />
+        <button onclick="chatSend()">Send</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Built for Tucson contractors. Visit 
+      <a href="https://www.tucsonaz.gov/Departments/Planning-Development-Services" target="_blank" rel="noopener">Tucson Development Services</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
