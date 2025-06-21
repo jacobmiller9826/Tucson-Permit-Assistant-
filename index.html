@@ -21,27 +21,20 @@
   </header>
 
   <main>
-    <section aria-labelledby="taskLabel">
-      <label id="taskLabel" for="taskSelect">Choose Task:</label>
-      <select id="taskSelect" onchange="loadChecklist()" aria-describedby="taskDesc" aria-required="true">
-        <option value="">-- Select --</option>
-      </select>
-      <p id="taskDesc" class="sr-only">Select a task to load its checklist and permit info</p>
+    <section id="taskSection">
+      <label for="taskSelect">🔧 Select Task:</label>
+      <select id="taskSelect" aria-label="Task List"></select>
+      <button onclick="checkPermit()">🔍 Check Permit</button>
     </section>
 
-    <section id="checklistSection" aria-live="polite" aria-relevant="additions removals" tabindex="0">
-      <h2>Checklist</h2>
-      <div id="checklist" role="list"></div>
+    <section id="stepsSection">
+      <h2>📋 Task Steps:</h2>
+      <ul id="stepList"></ul>
     </section>
 
-    <section id="permitSection" aria-label="Permit guidance" tabindex="0"></section>
-
-    <section id="customizeSection" aria-label="Customize task steps" hidden>
-      <h2>Customize Task Steps</h2>
-      <ul id="customStepsList"></ul>
-      <input type="text" id="newStepInput" aria-label="New step description" />
-      <button id="addStepBtn">Add Step</button>
-      <button id="resetTaskBtn">Reset to Default</button>
+    <section id="permitSection">
+      <h2>📄 Permit Info:</h2>
+      <p id="permitInfo">Select a task to see permit info.</p>
     </section>
 
     <section id="notesSection">
@@ -49,45 +42,6 @@
       <textarea id="notes" rows="4" placeholder="Add field notes here..." aria-label="Field notes"></textarea>
       <button id="startVoiceBtn" aria-label="Start voice input">🎙️ Start Voice Input</button>
       <button id="stopVoiceBtn" aria-label="Stop voice input" disabled>🛑 Stop Voice Input</button>
-    </section>
-
-    <section id="photoSection">
-      <label for="photoInput">📸 Add Photo:</label>
-      <input type="file" id="photoInput" accept="image/*" capture="environment" aria-label="Add photo from camera or files" />
-      <div id="photoPreview" aria-live="polite"></div>
-    </section>
-
-    <section id="locationSection">
-      <button id="locationBtn" onclick="getLocation()" aria-label="Get current location">📍 Get Location</button>
-      <div id="locationDisplay" aria-live="polite" tabindex="0"></div>
-    </section>
-
-    <section id="reportSection">
-      <button id="downloadBtn" disabled aria-disabled="true">📄 Export PDF Report</button>
-    </section>
-
-    <section id="helpSection" hidden>
-      <h2>Help & FAQ</h2>
-      <details>
-        <summary>What tasks are included?</summary>
-        <p>Install Water Heater, Install EV Charger, Kitchen Remodel by default. You can customize steps per task.</p>
-      </details>
-      <details>
-        <summary>Is this app offline-capable?</summary>
-        <p>Yes, it uses service worker caching so you can use it without internet after first load.</p>
-      </details>
-      <details>
-        <summary>How do I save my progress?</summary>
-        <p>Your progress is saved automatically in your browser’s local storage.</p>
-      </details>
-      <details>
-        <summary>How do I use voice input?</summary>
-        <p>Click "Start Voice Input" and speak your notes. Click "Stop Voice Input" to finish.</p>
-      </details>
-    </section>
-
-    <section id="footerSection">
-      <button id="toggleHelpBtn" aria-expanded="false" aria-controls="helpSection">❓ Help / FAQ</button>
     </section>
   </main>
 
