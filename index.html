@@ -6,7 +6,7 @@
   <title>Tucson Permit Assistant</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body onload="translateUI()">
   <header>
     <h1 id="title">🛠️ Tucson Permit Assistant</h1>
     <div class="lang-toggle">
@@ -20,7 +20,7 @@
 
   <main>
     <label id="label-jobType" for="jobType">Job Type</label>
-    <select id="jobType" onchange="updateShareLink()">
+    <select id="jobType">
       <option>Electrical</option>
       <option>Plumbing</option>
       <option>Remodeling</option>
@@ -32,7 +32,7 @@
     </select>
 
     <label id="label-description" for="description">Job Description</label>
-    <textarea id="description" rows="4" placeholder="Describe the work being done..." oninput="updateShareLink()"></textarea>
+    <textarea id="description" rows="4" placeholder="Describe the work being done..."></textarea>
 
     <div class="button-row">
       <button id="checkBtn" onclick="checkPermit()">Check Permit</button>
