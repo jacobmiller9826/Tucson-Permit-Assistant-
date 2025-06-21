@@ -1,206 +1,190 @@
-// ======= Permit Logic and Data =======
 const permitRules = {
   Electrical: {
-    en: `⚡ Electrical work almost always requires a permit — especially for panel changes, rewiring, EV chargers.
-Permit info: https://bit.ly/tucson-electrical`,
-    es: `⚡ El trabajo eléctrico casi siempre requiere un permiso — como cambios de panel, cableado o cargadores EV.
-Permiso: https://bit.ly/tucson-electrical`
+    en: "⚡ Electrical work almost always requires a permit — especially for panel changes, rewiring, or EV chargers.",
+    es: "⚡ El trabajo eléctrico casi siempre requiere un permiso — especialmente para cambios de panel, cableado o cargadores EV."
   },
   Plumbing: {
-    en: `🚰 Plumbing permits are needed for water heaters, piping changes, or new fixtures.
-Permit info: https://bit.ly/tucson-plumbing`,
-    es: `🚰 Se requieren permisos para plomería: calentadores, tuberías o accesorios nuevos.
-Permiso: https://bit.ly/tucson-plumbing`
+    en: "🚰 Plumbing permits are needed for water heaters, piping changes, or new fixtures.",
+    es: "🚰 Se necesitan permisos para calentadores, cambios de tuberías o accesorios nuevos."
   },
   Remodeling: {
-    en: `🛠️ Remodeling involving walls, electrical, plumbing, or structure needs permits.
-Info: https://bit.ly/tucson-remodel`,
-    es: `🛠️ Remodelaciones con paredes, electricidad o plomería requieren permisos.
-Más info: https://bit.ly/tucson-remodel`
+    en: "🛠️ Remodeling involving structure, walls, plumbing or electrical needs permits.",
+    es: "🛠️ Las remodelaciones con estructura, paredes, plomería o electricidad necesitan permisos."
   },
   HVAC: {
-    en: `❄️ New AC units, duct changes, or swamp cooler installs need permits.
-Details: https://bit.ly/tucson-hvac`,
-    es: `❄️ Unidades nuevas de A/C, ductos o coolers requieren permiso.
-Detalles: https://bit.ly/tucson-hvac`
+    en: "❄️ New AC units, ductwork, or swamp coolers require permits.",
+    es: "❄️ Nuevas unidades de A/C, ductos o enfriadores requieren permiso."
   },
   Roofing: {
-    en: `🏠 Roof replacements or major repairs require permits.
-See: https://bit.ly/tucson-roof`,
-    es: `🏠 Reemplazo de techos o reparaciones requieren permisos.
-Ver: https://bit.ly/tucson-roof`
+    en: "🏠 Roof replacements or major repairs require permits.",
+    es: "🏠 Los reemplazos o reparaciones mayores del techo requieren permiso."
   },
   Landscaping: {
-    en: `🌿 Landscaping usually doesn’t need permits unless grading or structural irrigation.
-Tip: Call Tucson DSD if unsure.`,
-    es: `🌿 El paisajismo no necesita permiso salvo cambio estructural.
-Llame a DSD si tiene dudas.`
+    en: "🌿 Landscaping usually doesn’t need permits unless grading or walls are added.",
+    es: "🌿 El paisajismo no requiere permiso salvo que agregue nivelación o muros."
   },
   Painting: {
-    en: `🎨 Painting doesn’t need a permit unless it's part of major remodeling.`,
-    es: `🎨 Pintar no requiere permiso salvo que sea parte de una remodelación.`
+    en: "🎨 Painting doesn't need a permit unless part of major remodeling.",
+    es: "🎨 Pintar no requiere permiso salvo que sea parte de una remodelación mayor."
   },
   Other: {
-    en: `ℹ️ Unsure? Call Tucson DSD at (520) 791-5550 or visit:
-https://www.tucsonaz.gov/Departments/Planning-Development-Services`,
-    es: `ℹ️ ¿No está seguro? Llame al DSD al (520) 791-5550 o visite:
-https://www.tucsonaz.gov/Departments/Planning-Development-Services`
+    en: "ℹ️ Unsure? Contact Tucson Development Services at (520) 791-5550.",
+    es: "ℹ️ ¿No está seguro? Llame a Desarrollo Urbano de Tucson: (520) 791-5550."
   }
 };
 
-// Keywords that boost/add info to answers based on description
 const keywords = {
-  solar: {
-    en: "☀️ Solar panel installations require specific permits. See: https://bit.ly/tucson-solar",
-    es: "☀️ La instalación de paneles solares requiere permisos específicos. Ver: https://bit.ly/tucson-solar"
+  "tesla": {
+    en: "🔋 Tesla/EV charger installation needs a permit. Check Tucson’s EV guidelines.",
+    es: "🔋 La instalación de cargadores Tesla/EV necesita permiso. Consulte las guías locales."
   },
   "water heater": {
-    en: "🚰 Replacing a water heater requires a plumbing permit in most cases.",
-    es: "🚰 Reemplazar un calentador de agua requiere un permiso de plomería en la mayoría de los casos."
+    en: "🔥 Water heater installations always require a plumbing permit.",
+    es: "🔥 Los calentadores de agua requieren permiso de plomería."
   },
-  fence: {
-    en: "🚧 Fence installation may require zoning approval if over 6 feet tall.",
-    es: "🚧 La instalación de cercas puede requerir aprobación de zonificación si supera 6 pies."
+  "solar": {
+    en: "☀️ Solar installations need specific electrical permits. Use Tucson Solar App.",
+    es: "☀️ Las instalaciones solares requieren permisos eléctricos. Use Tucson Solar App."
   },
-  shed: {
-    en: "🏠 Sheds over 200 sq ft typically require a permit.",
-    es: "🏠 Los cobertizos de más de 200 pies cuadrados generalmente requieren permiso."
-  },
-  grading: {
-    en: "🌄 Grading or drainage changes require permits and inspections.",
-    es: "🌄 Cambios en drenaje o nivelación requieren permisos e inspecciones."
+  "shed": {
+    en: "🏚️ Sheds over 200 sq ft need a permit and zoning clearance.",
+    es: "🏚️ Cobertizos de más de 200 pies cuadrados requieren permiso y verificación de zonificación."
   }
 };
 
-// FAQ Chat answers (basic offline)
-const faqAnswers = {
-  en: {
-    "do i need a permit to paint?": "🎨 Painting usually doesn't need a permit unless it's part of major remodeling.",
-    "how do i apply for a permit?": "You can apply online at https://www.tucsonaz.gov/pdsd/online-services or visit the Planning & Development office.",
-    "what is the fee for permits?": "Permit fees vary by project. See the fee schedule here: https://bit.ly/tucson-fees",
-    "how long does a permit take?": "Typical permit processing takes 5-10 business days, but can vary based on workload.",
-    "can i do electrical work myself?": "Homeowners can often do their own electrical work but still need a permit and inspection.",
-    "who do i contact for questions?": "Contact Tucson Development Services at (520) 791-5550 or visit https://www.tucsonaz.gov/Departments/Planning-Development-Services"
-  },
-  es: {
-    "¿necesito permiso para pintar?": "🎨 Pintar generalmente no requiere permiso a menos que sea parte de una remodelación mayor.",
-    "¿cómo solicito un permiso?": "Puede solicitar en línea en https://www.tucsonaz.gov/pdsd/online-services o en la oficina de Planeación y Desarrollo.",
-    "¿cuánto cuestan los permisos?": "Las tarifas varían según el proyecto. Consulte el calendario de tarifas aquí: https://bit.ly/tucson-fees",
-    "¿cuánto tarda un permiso?": "El trámite típico toma 5-10 días hábiles, pero varía según la carga de trabajo.",
-    "¿puedo hacer trabajo eléctrico yo mismo?": "Los propietarios pueden hacer trabajo eléctrico pero necesitan permiso e inspección.",
-    "¿a quién contacto para preguntas?": "Contacte Servicios de Desarrollo de Tucson al (520) 791-5550 o visite https://www.tucsonaz.gov/Departments/Planning-Development-Services"
-  }
-};
-
-// Translate UI labels/texts
 const labels = {
   en: {
     title: "🛠️ Tucson Permit Assistant",
     job: "Job Type",
     desc: "Job Description",
     check: "Check Permit",
-    pdf: "📄 Download PDF",
-    share: "🔗 Copy Share Link",
-    chatToggle: "💬 FAQs Chat",
-    chatPlaceholder: "Ask a question...",
-    copySuccess: "Share link copied to clipboard!"
+    pdf: "Download PDF",
+    share: "Copy Share Link",
+    chatToggle: "FAQs Chat",
+    chatPlaceholder: "Ask a question..."
   },
   es: {
     title: "🛠️ Asistente de Permisos de Tucson",
     job: "Tipo de trabajo",
     desc: "Descripción del trabajo",
     check: "Verificar Permiso",
-    pdf: "📄 Descargar PDF",
-    share: "🔗 Copiar enlace para compartir",
-    chatToggle: "💬 Chat de Preguntas",
-    chatPlaceholder: "Haz una pregunta...",
-    copySuccess: "¡Enlace copiado al portapapeles!"
+    pdf: "Descargar PDF",
+    share: "Copiar Enlace",
+    chatToggle: "Chat de Preguntas",
+    chatPlaceholder: "Haz una pregunta..."
   }
 };
 
-// ======= DOM Elements =======
-const resultDiv = document.getElementById("result");
-const descriptionInput = document.getElementById("description");
-const jobTypeSelect = document.getElementById("jobType");
-const langSelect = document.getElementById("language");
-const pdfBtn = document.getElementById("pdfBtn");
-const shareBtn = document.getElementById("shareBtn");
-const chatSection = document.getElementById("chat-section");
-const chatContainer = document.getElementById("chatContainer");
-const chatOutput = document.getElementById("chatOutput");
-const chatInput = document.getElementById("chatInput");
-const toggleChatBtn = document.getElementById("toggleChatBtn");
-
-// ======= Core Functions =======
-
-// Generate result text based on job type, description, and language
-function checkPermit() {
-  const jobType = jobTypeSelect.value;
-  const lang = langSelect.value;
-  let baseMessage = permitRules[jobType] ? permitRules[jobType][lang] : permitRules.Other[lang];
-  const description = descriptionInput.value.toLowerCase();
-
-  // Add keyword-based info if detected
-  for (const key in keywords) {
-    if (description.includes(key)) {
-      baseMessage += "\n\n" + keywords[key][lang];
-    }
+const faqAnswers = {
+  "how long": {
+    en: "⏱️ Most permits take 2–5 business days in Tucson.",
+    es: "⏱️ La mayoría de permisos tardan 2–5 días hábiles en Tucson."
+  },
+  "apply": {
+    en: "📝 Apply online via: https://tdc-online.tucsonaz.gov/",
+    es: "📝 Solicite en línea: https://tdc-online.tucsonaz.gov/"
+  },
+  "cost": {
+    en: "💵 Costs vary by job. Use Tucson’s permit calculator.",
+    es: "💵 Los costos varían. Use la calculadora de permisos de Tucson."
   }
+};
 
-  // Compose full permit summary for auto-fill & PDF
-  const permitSummary = `
-${labels[lang].job}: ${jobType}
-${labels[lang].desc}: ${descriptionInput.value.trim() || "—"}
-
-${baseMessage}
-`;
-
-  resultDiv.innerText = permitSummary.trim();
-  resultDiv.style.display = "block";
-
-  // Enable PDF and Share buttons
-  pdfBtn.disabled = false;
-  shareBtn.disabled = false;
-
-  // Update share link with current state
-  updateShareLink();
-}
-
-// Translate UI text
 function translateUI() {
-  const lang = langSelect.value;
+  const lang = document.getElementById("language").value;
   const l = labels[lang];
   document.getElementById("title").innerText = l.title;
   document.getElementById("label-jobType").innerText = l.job;
   document.getElementById("label-description").innerText = l.desc;
   document.getElementById("checkBtn").innerText = l.check;
-  pdfBtn.innerText = l.pdf;
-  shareBtn.innerText = l.share;
-  toggleChatBtn.innerText = l.chatToggle;
-  chatInput.placeholder = l.chatPlaceholder;
+  document.getElementById("pdfBtn").innerText = l.pdf;
+  document.getElementById("shareBtn").innerText = l.share;
+  document.getElementById("toggleChatBtn").innerText = l.chatToggle;
+  document.getElementById("chatInput").placeholder = l.chatPlaceholder;
+}
 
-  // Also update result if visible
-  if (resultDiv.style.display !== "none") {
+function checkPermit() {
+  const jobType = document.getElementById("jobType").value;
+  const desc = document.getElementById("description").value.toLowerCase();
+  const lang = document.getElementById("language").value;
+
+  let output = permitRules[jobType]?.[lang] || permitRules.Other[lang];
+
+  for (const key in keywords) {
+    if (desc.includes(key)) {
+      output += "\n\n" + keywords[key][lang];
+    }
+  }
+
+  const result = `${labels[lang].job}: ${jobType}
+${labels[lang].desc}: ${desc}
+
+${output}`;
+
+  document.getElementById("result").innerText = result;
+  document.getElementById("result").style.display = "block";
+  document.getElementById("pdfBtn").disabled = false;
+  document.getElementById("shareBtn").disabled = false;
+  history.replaceState(null, "", `?job=${encodeURIComponent(jobType)}&desc=${encodeURIComponent(desc)}&lang=${lang}`);
+}
+
+function downloadPDF() {
+  const text = document.getElementById("result").innerText;
+  const blob = new Blob([text], { type: "application/pdf" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "permit-summary.pdf";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyShareLink() {
+  navigator.clipboard.writeText(window.location.href);
+  alert("Link copied to clipboard!");
+}
+
+function loadFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const job = params.get("job");
+  const desc = params.get("desc");
+  const lang = params.get("lang");
+  if (job && desc && lang) {
+    document.getElementById("jobType").value = job;
+    document.getElementById("description").value = desc;
+    document.getElementById("language").value = lang;
+    translateUI();
     checkPermit();
   }
 }
 
-// Download permit summary as PDF using jsPDF (or fallback to text file)
-function downloadPDF() {
-  const text = resultDiv.innerText;
-  if (!text) return alert("Please check permit first.");
+function toggleChat() {
+  const chat = document.getElementById("chatContainer");
+  chat.style.display = chat.style.display === "none" ? "block" : "none";
+}
 
-  if (window.jspdf) {
-    const doc = new jspdf.jsPDF();
-    const splitText = doc.splitTextToSize(text, 180);
-    doc.text(splitText, 10, 10);
-    doc.save("tucson-permit-summary.pdf");
-  } else {
-    // Fallback: download as plain text file
-    const blob = new Blob([text], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "tucson-permit-summary.txt";
-    a.click();
-    URL.revokeObjectURL(url);
+function chatSend() {
+  const input = document.getElementById("chatInput").value.toLowerCase();
+  const output = document.getElementById("chatOutput");
+  const lang = document.getElementById("language").value;
+
+  const userMsg = `<div class="user">${input}</div>`;
+  output.innerHTML += userMsg;
+
+  let found = false;
+  for (const key in faqAnswers) {
+    if (input.includes(key)) {
+      const botMsg = `<div class="bot">${faqAnswers[key][lang]}</div>`;
+      output.innerHTML += botMsg;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    output.innerHTML += `<div class="bot">🤖 Sorry, I don’t have an answer for that yet.</div>`;
+  }
+
+  document.getElementById("chatInput").value = "";
+  output.scrollTop = output.scrollHeight;
+}
