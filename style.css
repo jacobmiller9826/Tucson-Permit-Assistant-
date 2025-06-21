@@ -1,0 +1,135 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #fdfaf3;
+  color: #3c2c1e;
+  margin: 0;
+  padding: 20px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  color: #c1440e;
+  font-size: 1.6em;
+}
+
+.lang-toggle label {
+  margin-right: 5px;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 15px;
+  display: block;
+}
+
+select, textarea, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fffdf8;
+}
+
+button {
+  background-color: #c1440e;
+  color: white;
+  border: none;
+  margin-top: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+button:disabled {
+  background-color: #d2a282;
+  cursor: not-allowed;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.result {
+  background: #fff7e6;
+  padding: 15px;
+  margin-top: 20px;
+  border-left: 6px solid #c1440e;
+  white-space: pre-wrap;
+  min-height: 60px;
+}
+
+footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #7a5b3b;
+}
+
+/* Chat Section */
+#chat-section {
+  margin-top: 30px;
+}
+
+#toggleChatBtn {
+  background-color: #c1440e;
+  width: 100%;
+}
+
+#chatContainer {
+  margin-top: 10px;
+  border: 1px solid #c1440e;
+  border-radius: 5px;
+  background: #fff8e6;
+  padding: 10px;
+}
+
+#chatOutput {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: #3c2c1e;
+}
+
+#chatOutput .user {
+  text-align: right;
+  font-weight: bold;
+}
+
+#chatOutput .bot {
+  text-align: left;
+  font-style: italic;
+  color: #7a5b3b;
+}
+
+#chatInput {
+  width: calc(100% - 60px);
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fffdf8;
+}
+
+#chatContainer button {
+  width: 50px;
+  margin-left: 10px;
+  background-color: #c1440e;
+  border: none;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 4px;
+}
