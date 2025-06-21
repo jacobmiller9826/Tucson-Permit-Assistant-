@@ -1,110 +1,137 @@
+/* Base styles and layout */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #fdfaf3;
-  color: #3c2c1e;
-  margin: 0;
+  font-family: system-ui, sans-serif;
   padding: 20px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
+  max-width: 600px;
+  margin-inline: auto;
+  background: var(--bg-color, #f4f1ea);
+  color: var(--text-color, #2f261f);
+  transition: background 0.3s, color 0.3s;
 }
-
+h1, h2 {
+  color: var(--accent-color, #c1440e);
+  margin-bottom: 0.5em;
+}
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
-
-h1 {
-  color: #c1440e;
+#top-controls {
+  display: flex;
+  gap: 1em;
+  align-items: center;
 }
-
-label {
-  font-weight: bold;
-  margin-top: 10px;
-  display: block;
-}
-
-select, textarea, button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
+select, button, textarea, input[type="file"], input[type="text"] {
   font-size: 1em;
+  padding: 10px;
+  margin-top: 10px;
+  width: 100%;
   border-radius: 4px;
   border: 1px solid #ccc;
   background: #fffdf8;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
 }
-
-button {
-  background-color: #c1440e;
-  color: white;
-  border: none;
+select:focus, button:focus, textarea:focus, input[type="file"]:focus, input[type="text"]:focus {
+  border-color: var(--accent-color, #c1440e);
+  outline: none;
+}
+#checklist {
+  margin-top: 20px;
+}
+.task-item {
+  margin-bottom: 8px;
+}
+.task-item input[type="checkbox"] {
+  margin-right: 10px;
   cursor: pointer;
 }
-
-button:disabled {
-  background-color: #c8a382;
-  cursor: not-allowed;
-}
-
-.button-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 15px;
-}
-
-.result {
-  background: #fff7e6;
-  border-left: 5px solid #c1440e;
-  padding: 15px;
+#permitSection {
   margin-top: 20px;
+  background: #fff9e6;
+  padding: 10px;
+  border-left: 5px solid var(--accent-color, #c1440e);
   white-space: pre-wrap;
 }
-
-footer {
-  margin-top: 40px;
-  text-align: center;
-  font-size: 0.9em;
-  color: #7a5b3b;
+#customizeSection {
+  margin-top: 20px;
 }
-
-/* Chat Section */
-#chat-section {
-  margin-top: 30px;
+#customStepsList {
+  list-style: none;
+  padding-left: 0;
 }
-
-#chatContainer {
-  margin-top: 10px;
-  border: 1px solid #c1440e;
-  border-radius: 5px;
-  background: #fff8e6;
-  padding: 10px;
+#customStepsList li {
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
 }
-
-#chatOutput {
-  max-height: 200px;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
-
-#chatOutput .user {
-  text-align: right;
+#customStepsList button {
+  background: transparent;
+  border: none;
+  color: var(--accent-color, #c1440e);
+  cursor: pointer;
   font-weight: bold;
+  font-size: 1.1em;
+}
+#notesSection, #photoSection, #locationSection, #reportSection, #helpSection, #footerSection {
+  margin-top: 20px;
+}
+#photoPreview img {
+  max-width: 100%;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+button:disabled, button[aria-disabled="true"] {
+  background: #ccc;
+  cursor: not-allowed;
+}
+footer {
+  text-align: center;
+  font-size: 0.8em;
+  margin-top: 30px;
+  color: #6d4e36;
 }
 
-#chatOutput .bot {
-  text-align: left;
-  font-style: italic;
-  color: #7a5b3b;
+/* Screen reader only */
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px,1px,1px,1px) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
 }
 
-#chatInput {
-  width: calc(100% - 60px);
-  padding: 8px;
+/* Dark mode styles */
+body.dark {
+  --bg-color: #1a1a1a;
+  --text-color: #f0e6d2;
+  --accent-color: #d96c14;
 }
-
-#chatContainer button {
-  width: 50px;
-  margin-left: 10px;
+body.dark select,
+body.dark button,
+body.dark textarea,
+body.dark input[type="file"],
+body.dark input[type="text"] {
+  background: #2b2b2b;
+  border-color: #d96c14;
+  color: #f0e6d2;
+}
+body.dark #permitSection {
+  background: #3a2a11;
+  border-left-color: #d96c14;
+}
+body.dark #photoPreview img {
+  border-color: #d96c14;
 }
